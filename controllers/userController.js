@@ -9,6 +9,7 @@ const registerUser = async (req, res) => {
 
     // Check if all required fields are provided
     if (!username || !email || !password) {
+      console.log("❌ Missing fields");
       return res.status(400).json({ message: "Please provide all fields" });
     }
 

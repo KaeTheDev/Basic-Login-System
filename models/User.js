@@ -1,4 +1,4 @@
-const { default: bcrypt } = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 // Destructure Schema from mongoose
@@ -24,13 +24,12 @@ const userSchema = new Schema({
     },
 });
 
-// Pre-save hook to hash password
-userSchema.pre("save", async function(next){
-    if(this.isNew || this.isModified("password")) {
-        const saltRounds = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds);
-    }
-    next();
+// Pre-save hook to hash password 
+userSchema.pre("save", async function(){
+  if(this.isNew || this.isModified("password")) {
+      const saltRounds = 10;
+      this.password = await bcrypt.hash(this.password, saltRounds);
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
